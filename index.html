@@ -1,0 +1,1634 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MB Service System | Gestión Técnica</title>
+
+<style>
+:root {
+    --blue: #0862f5;
+    --dark-blue: #1746a2;
+    --ink: #182033;
+    --muted: #697287;
+    --bg: #f4f6fb;
+    --white: #ffffff;
+    --green: #16845b;
+    --red: #c33d4b;
+    --orange: #d88920;
+    --border: #e6eaf1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: var(--bg);
+    color: var(--ink);
+}
+
+button, input, select, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+/* MENÚ LATERAL */
+
+.sidebar {
+    width: 250px;
+    background: var(--white);
+    border-right: 1px solid var(--border);
+    padding: 25px 16px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 10;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 5px 8px 28px;
+}
+
+.brand-logo {
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+    background: var(--blue);
+    color: white;
+    display: grid;
+    place-items: center;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.brand h2 {
+    font-size: 17px;
+}
+
+.brand small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.menu-title {
+    color: #9aa2b2;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    padding: 12px 10px;
+}
+
+.nav-button {
+    width: 100%;
+    text-align: left;
+    padding: 13px 12px;
+    margin-bottom: 5px;
+    border-radius: 9px;
+    background: transparent;
+    color: #586176;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.nav-button:hover,
+.nav-button.active {
+    background: #eaf1ff;
+    color: var(--blue);
+    font-weight: bold;
+}
+
+.sidebar-footer {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    right: 20px;
+    color: var(--muted);
+    font-size: 11px;
+}
+
+/* CONTENIDO PRINCIPAL */
+
+.main {
+    margin-left: 250px;
+    width: calc(100% - 250px);
+    padding: 28px 34px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    gap: 15px;
+}
+
+.topbar h1 {
+    font-size: 24px;
+}
+
+.topbar p {
+    color: var(--muted);
+    font-size: 13px;
+    margin-top: 5px;
+}
+
+.user {
+    background: white;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+.section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.section-heading h2 {
+    font-size: 19px;
+}
+
+.section-heading p {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+/* BOTONES */
+
+.btn {
+    padding: 11px 15px;
+    border-radius: 8px;
+    background: var(--blue);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background: var(--dark-blue);
+}
+
+.btn.secondary {
+    background: #eaf1ff;
+    color: var(--blue);
+}
+
+.btn.danger {
+    background: #fff0f1;
+    color: var(--red);
+}
+
+.btn.success {
+    background: #e8f7ef;
+    color: var(--green);
+}
+
+.btn.small {
+    padding: 7px 9px;
+    font-size: 11px;
+}
+
+/* INDICADORES */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 19px;
+}
+
+.stat-card p {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.stat-card h3 {
+    font-size: 29px;
+    margin-top: 13px;
+}
+
+.stat-card small {
+    color: var(--muted);
+    font-size: 11px;
+}
+
+.stat-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 10px;
+    background: #eaf1ff;
+    color: var(--blue);
+    display: grid;
+    place-items: center;
+    margin-bottom: 13px;
+    font-size: 17px;
+}
+
+/* TARJETAS Y TABLAS */
+
+.panel {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.panel h3 {
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.table-wrap {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+th {
+    text-align: left;
+    font-size: 11px;
+    color: var(--muted);
+    background: #f8f9fc;
+    padding: 13px 12px;
+}
+
+td {
+    padding: 13px 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+}
+
+.empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 28px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: bold;
+    background: #edf0f5;
+    color: #596274;
+}
+
+.badge.green {
+    background: #e5f6ed;
+    color: var(--green);
+}
+
+.badge.orange {
+    background: #fff3df;
+    color: var(--orange);
+}
+
+.badge.red {
+    background: #ffeaec;
+    color: var(--red);
+}
+
+.badge.blue {
+    background: #e8efff;
+    color: var(--blue);
+}
+
+.actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+/* FORMULARIOS */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.field.full {
+    grid-column: 1 / -1;
+}
+
+.field label {
+    font-size: 12px;
+    font-weight: bold;
+    color: #4d566a;
+}
+
+.field input,
+.field select,
+.field textarea {
+    width: 100%;
+    border: 1px solid #dce1ea;
+    border-radius: 8px;
+    padding: 11px;
+    background: white;
+    font-size: 12px;
+    outline: none;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+    border-color: var(--blue);
+}
+
+.field textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 9px;
+    margin-top: 20px;
+}
+
+/* MODAL */
+
+.modal-backdrop {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(18, 27, 48, .55);
+    z-index: 30;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+}
+
+.modal-backdrop.show {
+    display: flex;
+}
+
+.modal {
+    width: 100%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: white;
+    border-radius: 15px;
+    padding: 24px;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+}
+
+.close {
+    background: #f0f2f6;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    font-size: 17px;
+}
+
+/* SEGUIMIENTO */
+
+.history-item {
+    border-left: 3px solid var(--blue);
+    padding: 4px 0 15px 15px;
+    margin-left: 5px;
+}
+
+.history-item strong {
+    font-size: 12px;
+}
+
+.history-item p {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.history-item small {
+    color: #929bad;
+    font-size: 10px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width: 1000px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 700px) {
+    .sidebar {
+        width: 65px;
+        padding: 15px 7px;
+    }
+
+    .brand {
+        padding: 5px 3px 25px;
+    }
+
+    .brand div:last-child,
+    .menu-title,
+    .nav-button span,
+    .sidebar-footer {
+        display: none;
+    }
+
+    .nav-button {
+        justify-content: center;
+        padding: 13px 5px;
+        font-size: 17px;
+    }
+
+    .main {
+        margin-left: 65px;
+        width: calc(100% - 65px);
+        padding: 20px 13px;
+    }
+
+    .topbar h1 {
+        font-size: 19px;
+    }
+
+    .stats {
+        gap: 9px;
+    }
+
+    .stat-card {
+        padding: 13px;
+    }
+
+    .stat-card h3 {
+        font-size: 23px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .field.full {
+        grid-column: auto;
+    }
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- MENÚ DE NAVEGACIÓN -->
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo">MB</div>
+            <div>
+                <h2>MB SERVICE</h2>
+                <small>Gestión técnica</small>
+            </div>
+        </div>
+
+        <div class="menu-title">MENÚ PRINCIPAL</div>
+
+        <button class="nav-button active" data-page="dashboard">
+            <span>▦</span><span>Panel administrativo</span>
+        </button>
+
+        <button class="nav-button" data-page="technicians">
+            <span>♙</span><span>Gestión de técnicos</span>
+        </button>
+
+        <button class="nav-button" data-page="requests">
+            <span>▤</span><span>Solicitudes</span>
+        </button>
+
+        <button class="nav-button" data-page="assignments">
+            <span>⇄</span><span>Asignaciones</span>
+        </button>
+
+        <button class="nav-button" data-page="tracking">
+            <span>◷</span><span>Seguimiento e historial</span>
+        </button>
+
+        <div class="sidebar-footer">
+            MB Service System<br>
+            Gestión de personal técnico
+        </div>
+    </aside>
+
+    <!-- CONTENIDO -->
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h1 id="pageTitle">Panel administrativo</h1>
+                <p>Bienvenido al sistema de gestión de personal técnico.</p>
+            </div>
+            <div class="user">Administrador | MB Service</div>
+        </header>
+
+        <!-- PANEL ADMINISTRATIVO -->
+
+        <section class="page active" id="page-dashboard">
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon">♙</div>
+                    <p>Total de técnicos</p>
+                    <h3 id="statTechnicians">0</h3>
+                    <small>Personal registrado</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">✓</div>
+                    <p>Técnicos disponibles</p>
+                    <h3 id="statAvailable">0</h3>
+                    <small>Disponibilidad actual</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">▤</div>
+                    <p>Solicitudes pendientes</p>
+                    <h3 id="statPending">0</h3>
+                    <small>Requieren atención</small>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon">◷</div>
+                    <p>Solicitudes en proceso</p>
+                    <h3 id="statProgress">0</h3>
+                    <small>Actividades asignadas</small>
+                </div>
+
+            </div>
+
+            <div class="panel">
+                <h3>Solicitudes recientes</h3>
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CÓDIGO</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>PRIORIDAD</th>
+                                <th>ESTADO</th>
+                            </tr>
+                        </thead>
+                        <tbody id="dashboardRequests"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel">
+                <h3>Resumen del sistema</h3>
+                <p style="font-size:12px;color:#697287;line-height:1.8">
+                    MB Service System permite organizar la información
+                    del personal técnico, registrar solicitudes de servicio,
+                    asignar responsables y realizar seguimiento a las actividades.
+                </p>
+            </div>
+
+        </section>
+
+        <!-- GESTIÓN DE TÉCNICOS -->
+
+        <section class="page" id="page-technicians">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de técnicos</h2>
+                    <p>Registra y administra la información del personal técnico.</p>
+                </div>
+                <button class="btn" onclick="openTechModal()">
+                    + Registrar técnico
+                </button>
+            </div>
+
+            <div class="panel">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>NOMBRE</th>
+                                <th>CARGO</th>
+                                <th>ESPECIALIDAD</th>
+                                <th>CONTACTO</th>
+                                <th>ESTADO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="techTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- GESTIÓN DE SOLICITUDES -->
+
+        <section class="page" id="page-requests">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Gestión de solicitudes</h2>
+                    <p>Registra y consulta los requerimientos de servicio.</p>
+                </div>
+                <button class="btn" onclick="openRequestModal()">
+                    + Nueva solicitud
+                </button>
+            </div>
+
+            <div class="panel">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CÓDIGO</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>PRIORIDAD</th>
+                                <th>RESPONSABLE</th>
+                                <th>ESTADO</th>
+                                <th>ACCIONES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="requestTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ASIGNACIONES -->
+
+        <section class="page" id="page-assignments">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Asignación de actividades</h2>
+                    <p>Relaciona las solicitudes con los técnicos responsables.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="table-wrap">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>SOLICITUD</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>TÉCNICO</th>
+                                <th>ESTADO</th>
+                                <th>ACCIÓN</th>
+                            </tr>
+                        </thead>
+                        <tbody id="assignmentTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- SEGUIMIENTO -->
+
+        <section class="page" id="page-tracking">
+
+            <div class="section-heading">
+                <div>
+                    <h2>Seguimiento e historial</h2>
+                    <p>Consulta los movimientos registrados en las solicitudes.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="field">
+                    <label>Seleccionar solicitud</label>
+                    <select id="historySelect" onchange="renderHistory()">
+                        <option value="">Selecciona una solicitud</option>
+                    </select>
+                </div>
+
+                <div id="historyContent" style="margin-top:25px">
+                    <p style="color:#697287;font-size:12px">
+                        Selecciona una solicitud para consultar su historial.
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <div style="display:flex;justify-content:flex-end;margin-top:20px">
+            <button class="btn secondary" onclick="exportData()">
+                ↓ Exportar respaldo JSON
+            </button>
+        </div>
+
+    </main>
+</div>
+
+<!-- VENTANA MODAL -->
+
+<div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+
+        <div class="modal-header">
+            <h2 id="modalTitle">Formulario</h2>
+            <button class="close" onclick="closeModal()">×</button>
+        </div>
+
+        <form id="modalForm">
+            <div id="modalFields" class="form-grid"></div>
+
+            <div class="form-buttons">
+                <button type="button" class="btn secondary"
+                    onclick="closeModal()">Cancelar</button>
+
+                <button type="submit" class="btn">Guardar información</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<script>
+/* ==================================================
+   1. CONFIGURACIÓN Y ALMACENAMIENTO
+================================================== */
+
+const STORAGE_KEY = "mb_service_management_v1";
+
+const $ = id => document.getElementById(id);
+
+let data = loadData();
+
+let currentType = null;
+let currentId = null;
+
+function loadData() {
+    try {
+        const saved = localStorage.getItem(STORAGE_KEY);
+
+        if (saved) {
+            const parsed = JSON.parse(saved);
+
+            return {
+                technicians: parsed.technicians || [],
+                requests: parsed.requests || []
+            };
+        }
+    } catch (error) {
+        console.error("Error al cargar los datos:", error);
+    }
+
+    return {
+        technicians: [],
+        requests: []
+    };
+}
+
+function saveData() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function uid() {
+    return Date.now().toString(36) +
+        Math.random().toString(36).slice(2, 8);
+}
+
+function dateNow() {
+    return new Date().toLocaleString("es-CO");
+}
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    })[char]);
+}
+
+function techById(id) {
+    return data.technicians.find(t => t.id === id);
+}
+
+function requestById(id) {
+    return data.requests.find(r => r.id === id);
+}
+
+function techName(id) {
+    const tech = techById(id);
+    return tech ? tech.name : "Sin asignar";
+}
+
+function nextCode() {
+    const highest = data.requests.reduce((max, request) => {
+        const number = Number(
+            (request.code || "").replace(/\D/g, "")
+        ) || 0;
+
+        return Math.max(max, number);
+    }, 0);
+
+    return "SOL-" + String(highest + 1).padStart(4, "0");
+}
+
+
+/* ==================================================
+   2. NAVEGACIÓN
+================================================== */
+
+const pageNames = {
+    dashboard: "Panel administrativo",
+    technicians: "Gestión de técnicos",
+    requests: "Gestión de solicitudes",
+    assignments: "Asignación de actividades",
+    tracking: "Seguimiento e historial"
+};
+
+document.querySelectorAll(".nav-button").forEach(button => {
+    button.addEventListener("click", () => {
+        const page = button.dataset.page;
+        navigate(page);
+    });
+});
+
+function navigate(page) {
+    document.querySelectorAll(".page").forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.querySelectorAll(".nav-button").forEach(button => {
+        button.classList.remove("active");
+    });
+
+    $("page-" + page).classList.add("active");
+
+    document.querySelector(
+        `[data-page="${page}"]`
+    ).classList.add("active");
+
+    $("pageTitle").textContent = pageNames[page];
+
+    renderAll();
+}
+
+
+/* ==================================================
+   3. VENTANAS Y FORMULARIOS
+================================================== */
+
+function openModal(title, fields, type, id = null) {
+    currentType = type;
+    currentId = id;
+
+    $("modalTitle").textContent = title;
+    $("modalFields").innerHTML = fields;
+
+    $("modalBackdrop").classList.add("show");
+}
+
+function closeModal() {
+    $("modalBackdrop").classList.remove("show");
+    $("modalForm").reset();
+
+    currentType = null;
+    currentId = null;
+}
+
+function field(label, name, value = "", type = "text", full = false) {
+    return `
+        <div class="field ${full ? "full" : ""}">
+            <label for="${name}">${label}</label>
+            <input
+                id="${name}"
+                name="${name}"
+                type="${type}"
+                value="${escapeHTML(value)}"
+                required
+            >
+        </div>
+    `;
+}
+
+function selectField(label, name, options, selected = "", full = false) {
+    return `
+        <div class="field ${full ? "full" : ""}">
+            <label for="${name}">${label}</label>
+            <select id="${name}" name="${name}" required>
+                ${options.map(option => `
+                    <option value="${escapeHTML(option)}"
+                        ${option === selected ? "selected" : ""}>
+                        ${escapeHTML(option)}
+                    </option>
+                `).join("")}
+            </select>
+        </div>
+    `;
+}
+
+function textareaField(label, name, value = "") {
+    return `
+        <div class="field full">
+            <label for="${name}">${label}</label>
+            <textarea id="${name}" name="${name}" required>${escapeHTML(value)}</textarea>
+        </div>
+    `;
+}
+
+
+/* ==================================================
+   4. REGISTRO Y EDICIÓN DE TÉCNICOS
+================================================== */
+
+function openTechModal(id = null) {
+    const tech = id ? techById(id) : null;
+
+    const fields = `
+        ${field("Nombre completo", "fName", tech?.name || "")}
+        ${field("Cargo", "fRole", tech?.role || "")}
+        ${field("Correo electrónico", "fEmail", tech?.email || "", "email")}
+        ${field("Teléfono", "fPhone", tech?.phone || "", "tel")}
+        ${field("Especialidad", "fSpecialty", tech?.specialty || "")}
+        ${selectField(
+            "Estado",
+            "fStatus",
+            ["Disponible", "Ocupado", "Inactivo"],
+            tech?.status || "Disponible"
+        )}
+        ${field("Habilidades", "fSkills", tech?.skills || "", "text", true)}
+    `;
+
+    openModal(
+        tech ? "Editar técnico" : "Registrar técnico",
+        fields,
+        "technician",
+        id
+    );
+}
+
+
+/* ==================================================
+   5. REGISTRO Y EDICIÓN DE SOLICITUDES
+================================================== */
+
+function openRequestModal(id = null) {
+    const request = id ? requestById(id) : null;
+
+    const fields = `
+        ${field(
+            "Descripción de la solicitud",
+            "fDescription",
+            request?.description || "",
+            "text",
+            true
+        )}
+        ${textareaField(
+            "Detalle del requerimiento",
+            "fDetail",
+            request?.detail || ""
+        )}
+        ${selectField(
+            "Prioridad",
+            "fPriority",
+            ["Baja", "Media", "Alta", "Urgente"],
+            request?.priority || "Media"
+        )}
+        ${selectField(
+            "Estado",
+            "fRequestStatus",
+            ["Pendiente", "En proceso", "Finalizado", "Cancelado"],
+            request?.status || "Pendiente"
+        )}
+    `;
+
+    openModal(
+        request ? "Editar solicitud" : "Nueva solicitud",
+        fields,
+        "request",
+        id
+    );
+}
+
+
+/* ==================================================
+   6. GUARDAR FORMULARIOS
+================================================== */
+
+$("modalForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const form = new FormData(this);
+
+    if (currentType === "technician") {
+        saveTechnician(form);
+    }
+
+    if (currentType === "request") {
+        saveRequest(form);
+    }
+
+    closeModal();
+    renderAll();
+});
+
+function saveTechnician(form) {
+    const technician = {
+        id: currentId || uid(),
+        name: form.get("fName").trim(),
+        role: form.get("fRole").trim(),
+        email: form.get("fEmail").trim(),
+        phone: form.get("fPhone").trim(),
+        specialty: form.get("fSpecialty").trim(),
+        status: form.get("fStatus"),
+        skills: form.get("fSkills").trim()
+    };
+
+    if (currentId) {
+        const index = data.technicians.findIndex(
+            t => t.id === currentId
+        );
+
+        data.technicians[index] = technician;
+    } else {
+        data.technicians.push(technician);
+    }
+
+    saveData();
+}
+
+function saveRequest(form) {
+    const previous = currentId
+        ? requestById(currentId)
+        : null;
+
+    const request = previous || {
+        id: uid(),
+        code: nextCode(),
+        technicianId: "",
+        history: [],
+        createdAt: dateNow()
+    };
+
+    request.description = form.get("fDescription").trim();
+    request.detail = form.get("fDetail").trim();
+    request.priority = form.get("fPriority");
+    request.status = form.get("fRequestStatus");
+
+    if (!previous) {
+        addHistory(
+            request,
+            "Solicitud creada",
+            "Se registró una nueva solicitud."
+        );
+
+        data.requests.push(request);
+    } else {
+        addHistory(
+            request,
+            "Solicitud actualizada",
+            "Se modificó la información de la solicitud."
+        );
+    }
+
+    saveData();
+}
+
+
+/* ==================================================
+   7. ELIMINACIÓN DE TÉCNICOS
+================================================== */
+
+function deleteTech(id) {
+    const assigned = data.requests.some(
+        request => request.technicianId === id &&
+        request.status !== "Finalizado" &&
+        request.status !== "Cancelado"
+    );
+
+    if (assigned) {
+        alert(
+            "No es posible eliminar este técnico porque tiene solicitudes activas asignadas."
+        );
+        return;
+    }
+
+    if (!confirm("¿Deseas eliminar este técnico?")) {
+        return;
+    }
+
+    data.technicians = data.technicians.filter(
+        tech => tech.id !== id
+    );
+
+    saveData();
+    renderAll();
+}
+
+
+/* ==================================================
+   8. ELIMINACIÓN DE SOLICITUDES
+================================================== */
+
+function deleteRequest(id) {
+    if (!confirm("¿Deseas eliminar esta solicitud?")) {
+        return;
+    }
+
+    data.requests = data.requests.filter(
+        request => request.id !== id
+    );
+
+    saveData();
+    renderAll();
+}
+
+
+/* ==================================================
+   9. ASIGNACIÓN DE TÉCNICOS
+================================================== */
+
+function openAssignModal(id) {
+    const request = requestById(id);
+
+    if (!request) return;
+
+    const available = data.technicians.filter(
+        tech => tech.status === "Disponible" ||
+        tech.id === request.technicianId
+    );
+
+    if (available.length === 0) {
+        alert("No hay técnicos disponibles para asignar.");
+        return;
+    }
+
+    const options = available.map(tech => `
+        <option value="${escapeHTML(tech.id)}"
+            ${tech.id === request.technicianId ? "selected" : ""}>
+            ${escapeHTML(tech.name)} - ${escapeHTML(tech.specialty)}
+        </option>
+    `).join("");
+
+    const fields = `
+        <div class="field full">
+            <label>Solicitud</label>
+            <input value="${escapeHTML(request.code)} - ${escapeHTML(request.description)}" disabled>
+        </div>
+
+        <div class="field full">
+            <label for="fTechnician">Seleccionar técnico</label>
+            <select id="fTechnician" required>
+                <option value="">Selecciona un técnico</option>
+                ${options}
+            </select>
+        </div>
+    `;
+
+    openModal(
+        "Asignar responsable",
+        fields,
+        "assignment",
+        id
+    );
+}
+
+
+/* ==================================================
+   10. CAMBIAR ESTADO DE SOLICITUD
+================================================== */
+
+function changeStatus(id) {
+    const request = requestById(id);
+
+    if (!request) return;
+
+    const states = [
+        "Pendiente",
+        "En proceso",
+        "Finalizado",
+        "Cancelado"
+    ];
+
+    const selected = prompt(
+        "Selecciona el nuevo estado:\n" +
+        "1. Pendiente\n" +
+        "2. En proceso\n" +
+        "3. Finalizado\n" +
+        "4. Cancelado",
+        String(states.indexOf(request.status) + 1)
+    );
+
+    if (selected === null) return;
+
+    const newStatus = states[Number(selected) - 1];
+
+    if (!newStatus) {
+        alert("Opción no válida.");
+        return;
+    }
+
+    const oldStatus = request.status;
+    request.status = newStatus;
+
+    addHistory(
+        request,
+        "Estado actualizado",
+        oldStatus + " → " + newStatus
+    );
+
+    saveData();
+    renderAll();
+}
+
+
+/* ==================================================
+   11. HISTORIAL DE MOVIMIENTOS
+================================================== */
+
+function addHistory(request, action, detail) {
+    request.history = request.history || [];
+
+    request.history.push({
+        action: action,
+        detail: detail,
+        date: dateNow()
+    });
+}
+
+
+/* ==================================================
+   12. MOSTRAR TÉCNICOS
+================================================== */
+
+function renderTechnicians() {
+    const tbody = $("techTable");
+
+    if (data.technicians.length === 0) {
+        tbody.innerHTML = `
+            <tr><td colspan="6" class="empty">
+                No hay técnicos registrados.
+            </td></tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = data.technicians.map(tech => `
+        <tr>
+            <td><strong>${escapeHTML(tech.name)}</strong></td>
+            <td>${escapeHTML(tech.role)}</td>
+            <td>${escapeHTML(tech.specialty)}</td>
+            <td>
+                ${escapeHTML(tech.email)}<br>
+                ${escapeHTML(tech.phone)}
+            </td>
+            <td>${statusBadge(tech.status)}</td>
+            <td>
+                <div class="actions">
+                    <button class="btn secondary small"
+                        onclick="openTechModal('${tech.id}')">
+                        Editar
+                    </button>
+                    <button class="btn danger small"
+                        onclick="deleteTech('${tech.id}')">
+                        Eliminar
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+}
+
+
+/* ==================================================
+   13. MOSTRAR SOLICITUDES
+================================================== */
+
+function renderRequests() {
+    const tbody = $("requestTable");
+
+    if (data.requests.length === 0) {
+        tbody.innerHTML = `
+            <tr><td colspan="6" class="empty">
+                No hay solicitudes registradas.
+            </td></tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = data.requests.map(request => `
+        <tr>
+            <td><strong>${escapeHTML(request.code)}</strong></td>
+            <td>${escapeHTML(request.description)}</td>
+            <td>${priorityBadge(request.priority)}</td>
+            <td>${escapeHTML(techName(request.technicianId))}</td>
+            <td>${statusBadge(request.status)}</td>
+            <td>
+                <div class="actions">
+                    <button class="btn secondary small"
+                        onclick="openRequestModal('${request.id}')">
+                        Editar
+                    </button>
+                    <button class="btn danger small"
+                        onclick="deleteRequest('${request.id}')">
+                        Eliminar
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+}
+
+
+/* ==================================================
+   14. MOSTRAR ASIGNACIONES
+================================================== */
+
+function renderAssignments() {
+    const tbody = $("assignmentTable");
+
+    if (data.requests.length === 0) {
+        tbody.innerHTML = `
+            <tr><td colspan="5" class="empty">
+                No hay solicitudes para asignar.
+            </td></tr>
+        `;
+        return;
+    }
+
+    tbody.innerHTML = data.requests.map(request => `
+        <tr>
+            <td><strong>${escapeHTML(request.code)}</strong></td>
+            <td>${escapeHTML(request.description)}</td>
+            <td>${escapeHTML(techName(request.technicianId))}</td>
+            <td>${statusBadge(request.status)}</td>
+            <td>
+                <div class="actions">
+                    <button class="btn secondary small"
+                        onclick="openAssignModal('${request.id}')">
+                        Asignar
+                    </button>
+                    <button class="btn success small"
+                        onclick="changeStatus('${request.id}')">
+                        Cambiar estado
+                    </button>
+                </div>
+            </td>
+        </tr>
+    `).join("");
+}
+
+
+/* ==================================================
+   15. MOSTRAR HISTORIAL
+================================================== */
+
+function renderHistoryOptions() {
+    const select = $("historySelect");
+    const previous = select.value;
+
+    select.innerHTML = `
+        <option value="">Selecciona una solicitud</option>
+        ${data.requests.map(request => `
+            <option value="${escapeHTML(request.id)}">
+                ${escapeHTML(request.code)} - ${escapeHTML(request.description)}
+            </option>
+        `).join("")}
+    `;
+
+    if (data.requests.some(r => r.id === previous)) {
+        select.value = previous;
+    }
+}
+
+function renderHistory() {
+    const id = $("historySelect").value;
+    const request = requestById(id);
+    const container = $("historyContent");
+
+    if (!request) {
+        container.innerHTML = `
+            <p style="color:#697287;font-size:12px">
+                Selecciona una solicitud para consultar su historial.
+            </p>
+        `;
+        return;
+    }
+
+    const history = request.history || [];
+
+    container.innerHTML = `
+        <h3 style="margin-bottom:18px">
+            ${escapeHTML(request.code)} -
+            ${escapeHTML(request.description)}
+        </h3>
+
+        ${history.length === 0
+            ? "<p>No hay movimientos registrados.</p>"
+            : history.slice().reverse().map(item => `
+                <div class="history-item">
+                    <strong>${escapeHTML(item.action)}</strong>
+                    <p>${escapeHTML(item.detail)}</p>
+                    <small>${escapeHTML(item.date)}</small>
+                </div>
+            `).join("")
+        }
+    `;
+}
+
+
+/* ==================================================
+   16. PANEL ADMINISTRATIVO
+================================================== */
+
+function renderDashboard() {
+    const technicians = data.technicians;
+    const requests = data.requests;
+
+    $("statTechnicians").textContent = technicians.length;
+
+    $("statAvailable").textContent =
+        technicians.filter(t => t.status === "Disponible").length;
+
+    $("statPending").textContent =
+        requests.filter(r => r.status === "Pendiente").length;
+
+    $("statProgress").textContent =
+        requests.filter(r => r.status === "En proceso").length;
+
+    const recent = requests.slice(-5).reverse();
+
+    $("dashboardRequests").innerHTML = recent.length
+        ? recent.map(request => `
+            <tr>
+                <td>${escapeHTML(request.code)}</td>
+                <td>${escapeHTML(request.description)}</td>
+                <td>${priorityBadge(request.priority)}</td>
+                <td>${statusBadge(request.status)}</td>
+            </tr>
+        `).join("")
+        : `
+            <tr>
+                <td colspan="4" class="empty">
+                    Todavía no hay solicitudes registradas.
+                </td>
+            </tr>
+        `;
+}
+
+
+/* ==================================================
+   17. ETIQUETAS DE ESTADO Y PRIORIDAD
+================================================== */
+
+function statusBadge(status) {
+    let color = "blue";
+
+    if (status === "Disponible" || status === "Finalizado") {
+        color = "green";
+    }
+
+    if (status === "Pendiente" || status === "Ocupado") {
+        color = "orange";
+    }
+
+    if (status === "Inactivo" || status === "Cancelado") {
+        color = "red";
+    }
+
+    return `<span class="badge ${color}">${escapeHTML(status)}</span>`;
+}
+
+function priorityBadge(priority) {
+    let color = "blue";
+
+    if (priority === "Alta" || priority === "Urgente") {
+        color = "red";
+    }
+
+    if (priority === "Media") {
+        color = "orange";
+    }
+
+    return `<span class="badge ${color}">${escapeHTML(priority)}</span>`;
+}
+
+
+/* ==================================================
+   18. EXPORTAR RESPALDO
+================================================== */
+
+function exportData() {
+    const content = JSON.stringify(data, null, 2);
+
+    const blob = new Blob(
+        [content],
+        { type: "application/json" }
+    );
+
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "respaldo-mb-service.json";
+
+    link.click();
+
+    URL.revokeObjectURL(url);
+}
+
+
+/* ==================================================
+   19. ACTUALIZAR TODA LA APLICACIÓN
+================================================== */
+
+function renderAll() {
+    renderDashboard();
+    renderTechnicians();
+    renderRequests();
+    renderAssignments();
+    renderHistoryOptions();
+
+    if ($("historySelect").value) {
+        renderHistory();
+    }
+}
+
+
+/* ==================================================
+   20. INICIAR APLICACIÓN
+================================================== */
+
+renderAll();
+
+</script>
+
+</body>
+</html>
